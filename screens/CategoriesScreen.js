@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Text, Button, StyleSheet, FlatList, TouchableOpacity, Platform} from 'react-native'
 
-import {CATEGORIES} from "../data/dummy-data";
+import {CATEGORIES} from "../data/data";
 import Colors from "../constants/Colors";
 
 const CategoriesScreen = props => {
@@ -9,7 +9,12 @@ const CategoriesScreen = props => {
     const renderGridItem = (itemData) => {
         return (
             <TouchableOpacity style={styles.gridItem} onPress={() => {
-                props.navigation.navigate('CategoryMealsScreen')
+                props.navigation.navigate('CategoryMealsScreen',
+                    //dodaję parametry z tego ekranu na następny, żeby można było wyświetlić tylko przepisy z tej jednej
+                    // kategorii
+                    {
+                        categoryId: itemData.item.id,
+                    })
             }}>
                 <View>
                     <Text>{itemData.item.title}</Text>
