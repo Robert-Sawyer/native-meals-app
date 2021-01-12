@@ -1,8 +1,7 @@
 import React from 'react'
-import {View, Text, Button, StyleSheet, FlatList, TouchableOpacity, Platform} from 'react-native'
+import {View, Text, Button, StyleSheet, FlatList, TouchableOpacity} from 'react-native'
 
 import {CATEGORIES} from "../data/data";
-import Colors from "../constants/Colors";
 
 const CategoriesScreen = props => {
 
@@ -26,18 +25,6 @@ const CategoriesScreen = props => {
     return (
         <FlatList keyExtractor={(item, index) => item.id} data={CATEGORIES} renderItem={renderGridItem} numColumns={2}/>
     )
-}
-
-CategoriesScreen.navigationOptions = {
-    headerTitle: 'Kategorie',
-    headerStyle: {
-        backgroundColor: Platform.OS === 'android' ? Colors.headerColor : '#ea6a15',
-    },
-    headerTitleStyle: {
-        // alignSelf: 'center',
-        fontSize: 24,
-        marginLeft: 10,
-    },
 }
 
 const styles = StyleSheet.create({
