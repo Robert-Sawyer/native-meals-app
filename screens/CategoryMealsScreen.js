@@ -23,14 +23,22 @@ const CategoryMealsScreen = props => {
     )
 }
 
-CategoryMealsScreen.navigationOptions = {
-    headerTitle: `Przepisy`,
-    headerStyle: {
-        backgroundColor: Platform.OS === 'android' ? Colors.headerColor : '#ea6a15',
-    },
-    headerTitleStyle: {
-        fontSize: 24,
-    },
+CategoryMealsScreen.navigationOptions = navigationData => {
+
+    const catId = navigationData.navigation.getParam('categoryId')
+
+    const selectedCategory = CATEGORIES.find(cat => cat.id === catId)
+
+    return {
+        headerTitle: `Kuchnia ${selectedCategory.title}`,
+        headerStyle: {
+            backgroundColor: Platform.OS === 'android' ? Colors.headerColor : '#ea6a15',
+        },
+        headerTitleStyle: {
+            alignSelf: 'flex-start',
+            fontSize: 22,
+        }
+    }
 }
 
 const styles = StyleSheet.create({

@@ -34,8 +34,9 @@ CategoriesScreen.navigationOptions = {
         backgroundColor: Platform.OS === 'android' ? Colors.headerColor : '#ea6a15',
     },
     headerTitleStyle: {
-        alignSelf: 'center',
+        // alignSelf: 'center',
         fontSize: 24,
+        marginLeft: 10,
     },
 }
 
