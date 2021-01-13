@@ -13,6 +13,7 @@ const MealsNavigator = createStackNavigator({
             headerTitle: 'Kategorie',
             headerTitleStyle: {
                 marginLeft: 10,
+                fontSize: 24,
             }
         }
     },

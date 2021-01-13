@@ -1,8 +1,8 @@
 import Category from "../models/category";
 
 export const CATEGORIES = [
-    new Category('c1', 'Włoska', '#f5428d'),
-    new Category('c2', 'Polska', '#f54242'),
+    new Category('c1', 'Polska', '#f54242'),
+    new Category('c2', 'Włoska', '#f5428d'),
     new Category('c3', 'Amerykańska', '#f5a442'),
     new Category('c4', 'Niemiecka', '#f5d142'),
     new Category('c5', 'Tajska', '#368dff'),
