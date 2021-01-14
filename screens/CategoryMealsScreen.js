@@ -1,6 +1,7 @@
 import React from 'react'
-import {View, Text, FlatList, StyleSheet} from 'react-native'
+import {View, FlatList, StyleSheet} from 'react-native'
 import {CATEGORIES, MEALS} from "../data/data";
+import MealItem from "../components/MealItem";
 
 
 const CategoryMealsScreen = props => {
@@ -14,9 +15,14 @@ const CategoryMealsScreen = props => {
 
     const renderMealItem = itemData => {
         return (
-            <View>
-                <Text>{itemData.item.title}</Text>
-            </View>
+            <MealItem
+                title={itemData.item.title}
+                duration={itemData.item.duration}
+                complexity={itemData.item.complexity}
+                affordability={itemData.item.affordability}
+                image={itemData.item.imageUrl}
+                onSelectMeal={() => {}}
+            />
         )
     }
 
@@ -26,8 +32,9 @@ const CategoryMealsScreen = props => {
                 data={displayedMeals}
                 keyExtractor={(item, index) => item.id}
                 renderItem={renderMealItem}
+                style={{width: '100%'}}
             />
-        </View>
+         </View>
     )
 }
 
@@ -44,6 +51,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingHorizontal: 15,
     },
 })
 
