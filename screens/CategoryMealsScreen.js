@@ -1,22 +1,32 @@
 import React from 'react'
-import {View, Text, Button, StyleSheet} from 'react-native'
-import {CATEGORIES} from "../data/data";
+import {View, Text, FlatList, StyleSheet} from 'react-native'
+import {CATEGORIES, MEALS} from "../data/data";
+
 
 const CategoryMealsScreen = props => {
 
     //odbieram tu nazwę parametru z CategoriesScreen
     const categoryId = props.navigation.getParam('categoryId')
 
-    //dobieram się do tablicy kategorii i sprawdzam czy kategoria zgadza się z klikniętą przez usera na poprzednim ekranie
-    const selectedCategory = CATEGORIES.find(cat => cat.id === categoryId)
+    //filtruję wyświetlane przepisy sprawdzając czy w tablicy categorii w MEALS jest w ogóle taka sama kategoria co
+    //wybrana przez usera
+    const displayedMeals = MEALS.filter(meal => meal.categoryId.indexOf(categoryId) >= 0)
+
+    const renderMealItem = itemData => {
+        return (
+            <View>
+                <Text>{itemData.item.title}</Text>
+            </View>
+        )
+    }
 
     return (
         <View style={styles.screen}>
-            <Text>Category Meals Screen</Text>
-            <Text>{selectedCategory.title}</Text>
-            <Button title='Przejdź dalej' onPress={() => {
-                props.navigation.navigate('MealDetailsScreen')
-            }} />
+            <FlatList
+                data={displayedMeals}
+                keyExtractor={(item, index) => item.id}
+                renderItem={renderMealItem}
+            />
         </View>
     )
 }
