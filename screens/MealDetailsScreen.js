@@ -26,7 +26,7 @@ MealDetailsScreen.navigationOptions = navigationData => {
         //HeaderButtons wymaga zdefiniowania komponentu, którym jest mój CHB, w Item za to definiuję nazwę ikony
         //z pakietu w dokumentacji expo-vectors
             <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-                <Item title='Favorite' iconName='staro' onPress={() => {
+                <Item title='Favorite' iconName='ios-star-outline' onPress={() => {
                     console.log('Wciskam buttona')
                 }}/>
             </HeaderButtons>

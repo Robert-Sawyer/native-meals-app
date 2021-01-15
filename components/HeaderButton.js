@@ -1,14 +1,14 @@
 import React from 'react'
 import {HeaderButton} from 'react-navigation-header-buttons'
-import {AntDesign} from '@expo/vector-icons'
+import {Ionicons} from '@expo/vector-icons'
 
 const CustomHeaderButton = props => {
     //poprzez {...props} przekazuję do komponentu wszystkie propsy naraz
     return <HeaderButton
         {...props}
-        IconComponent={AntDesign}
+        IconComponent={Ionicons}
         iconSize={23}
-        color='#fff'/>
+        color='#000'/>
 }
 
 export default CustomHeaderButton
