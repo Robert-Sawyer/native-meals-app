@@ -1,10 +1,14 @@
 import {createAppContainer} from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
 import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import MealDetailsScreen from "../screens/MealDetailsScreen";
 import {Platform} from "react-native";
 import Colors from "../constants/Colors";
+import FavoritesScreen from "../screens/FavoritesScreen";
+import {Ionicons} from "@expo/vector-icons";
+import React from "react";
 
 const MealsNavigator = createStackNavigator({
     CategoriesScreen: {
@@ -38,4 +42,32 @@ const MealsNavigator = createStackNavigator({
     }
 })
 
-export default createAppContainer(MealsNavigator)
+const MealFavTabNavigator = createBottomTabNavigator({
+    Meal: {
+        screen: MealsNavigator,
+        navigationOptions: {
+            tabBarLabel: 'Wszystkie',
+            tabBarIcon: (tabInfo) => {
+                //tintColor jest tym kolorem który definiuję niżej, w tabBarOptions
+                return <Ionicons name='restaurant' color={tabInfo.tintColor} size={22}/>
+            }
+        }
+    },
+    Favorites: {
+        screen: FavoritesScreen,
+        navigationOptions: {
+            tabBarLabel: 'Ulubione',
+            tabBarIcon: (tabInfo) => {
+                //tintColor jest tym kolorem który definiuję niżej, w tabBarOptions
+                return <Ionicons name='ios-star' color={tabInfo.tintColor} size={22}/>
+            }
+        }
+
+    }
+}, {
+    tabBarOptions: {
+        activeTintColor: Colors.headerColor
+    }
+})
+
+export default createAppContainer(MealFavTabNavigator)
