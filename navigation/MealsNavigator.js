@@ -11,6 +11,16 @@ import FavoritesScreen from "../screens/FavoritesScreen";
 import {Ionicons} from "@expo/vector-icons";
 import React from "react";
 
+const defaultNavOptions = {
+    headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? Colors.tabBarColor : '#ea6a15',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+        fontSize: 23,
+    }
+}
+
 const MealsNavigator = createStackNavigator({
     CategoriesScreen: {
         screen: CategoriesScreen,
@@ -33,15 +43,23 @@ const MealsNavigator = createStackNavigator({
     //style poniżej, w dNO będą nadpisane jeśli wystąpi konflikt ze stylami wpisanymi powyżej, w obiekcie
     // navigationOptions, jeśli nie ma konfliktów wtedy style są mergowane. Najwyższy priorytet mają style powyżej,
     //nadpiszą nawet style zdefiniowane w pliku komponentu.
-    defaultNavigationOptions: {
-        headerStyle: {
-            backgroundColor: Platform.OS === 'android' ? Colors.tabBarColor : '#ea6a15',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontSize: 23,
+    defaultNavigationOptions: defaultNavOptions
+})
+
+const FavNavigator = createStackNavigator({
+    FavoritesScreen: {
+        screen: FavoritesScreen,
+        navigationOptions: {
+            headerTitle: 'Ulubione',
+            headerTitleStyle: {
+                marginLeft: 10,
+                fontSize: 24,
+            }
         }
-    }
+    },
+    MealDetail: MealDetailsScreen
+},{
+    defaultNavigationOptions: defaultNavOptions
 })
 
 const tabScreenConfig = {
@@ -57,7 +75,7 @@ const tabScreenConfig = {
         }
     },
     Favorites: {
-        screen: FavoritesScreen,
+        screen: FavNavigator,
         navigationOptions: {
             tabBarLabel: 'Ulubione',
             tabBarIcon: (tabInfo) => {
