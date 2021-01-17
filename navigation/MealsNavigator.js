@@ -1,6 +1,7 @@
 import {createAppContainer} from 'react-navigation'
-import { createStackNavigator } from 'react-navigation-stack'
-import { createBottomTabNavigator } from 'react-navigation-tabs'
+import {createStackNavigator} from 'react-navigation-stack'
+import {createBottomTabNavigator} from 'react-navigation-tabs'
+import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs'
 import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import MealDetailsScreen from "../screens/MealDetailsScreen";
@@ -34,15 +35,16 @@ const MealsNavigator = createStackNavigator({
     //nadpiszą nawet style zdefiniowane w pliku komponentu.
     defaultNavigationOptions: {
         headerStyle: {
-            backgroundColor: Platform.OS === 'android' ? Colors.headerColor : '#ea6a15',
+            backgroundColor: Platform.OS === 'android' ? Colors.tabBarColor : '#ea6a15',
         },
+        headerTintColor: '#fff',
         headerTitleStyle: {
             fontSize: 23,
         }
     }
 })
 
-const MealFavTabNavigator = createBottomTabNavigator({
+const tabScreenConfig = {
     Meal: {
         screen: MealsNavigator,
         navigationOptions: {
@@ -50,7 +52,8 @@ const MealFavTabNavigator = createBottomTabNavigator({
             tabBarIcon: (tabInfo) => {
                 //tintColor jest tym kolorem który definiuję niżej, w tabBarOptions
                 return <Ionicons name='restaurant' color={tabInfo.tintColor} size={22}/>
-            }
+            },
+            tabBarColor: Colors.tabBarColor
         }
     },
     Favorites: {
@@ -60,14 +63,26 @@ const MealFavTabNavigator = createBottomTabNavigator({
             tabBarIcon: (tabInfo) => {
                 //tintColor jest tym kolorem który definiuję niżej, w tabBarOptions
                 return <Ionicons name='ios-star' color={tabInfo.tintColor} size={22}/>
-            }
+            },
+            //tabBarColor zadziała tylko z włączoną opcją shifting, niżej w configu, bez tego tylko barStyle itp
+            tabBarColor: Colors.tabBarColor
         }
+    }
+}
 
-    }
-}, {
-    tabBarOptions: {
-        activeTintColor: Colors.headerColor
-    }
-})
+const MealFavTabNavigator = Platform.OS === 'android'
+    ? createMaterialBottomTabNavigator(tabScreenConfig, {
+        //warto pokombinować z kolorami tu i na górze, w tabScreenConfig i shifting, bo można osiągnąć ciekawszy efekt
+        activeColor: Colors.headerColor,
+        shifting: false,
+        barStyle: {
+            backgroundColor: Colors.tabBarColor
+        }
+    })
+    : createBottomTabNavigator(tabScreenConfig, {
+        tabBarOptions: {
+            activeTintColor: Colors.headerColor
+        }
+    })
 
 export default createAppContainer(MealFavTabNavigator)
