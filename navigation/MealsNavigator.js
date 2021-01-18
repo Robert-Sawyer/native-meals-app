@@ -6,7 +6,7 @@ import {createDrawerNavigator} from 'react-navigation-drawer'
 import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import MealDetailsScreen from "../screens/MealDetailsScreen";
-import {Platform} from "react-native";
+import {Text, Platform} from "react-native";
 import Colors from "../constants/Colors";
 import FavoritesScreen from "../screens/FavoritesScreen";
 import {Ionicons} from "@expo/vector-icons";
@@ -20,6 +20,10 @@ const defaultNavOptions = {
     headerTintColor: '#fff',
     headerTitleStyle: {
         fontSize: 23,
+        fontFamily: 'open-sans-bold'
+    },
+    headerBackTitleStyle: {
+        fontFamily: 'open-sans'
     }
 }
 
@@ -48,18 +52,23 @@ const tabScreenConfig = {
     Meal: {
         screen: MealsNavigator,
         navigationOptions: {
-            tabBarLabel: 'Wszystkie',
+            tabBarLabel:
+                Platform.OS === 'android'
+                    ? <Text style={{fontFamily: 'open-sans-bold'}}>Wszystkie</Text>
+                    : 'Wszystkie',
             tabBarIcon: (tabInfo) => {
                 //tintColor jest tym kolorem który definiuję niżej, w tabBarOptions
                 return <Ionicons name='restaurant' color={tabInfo.tintColor} size={22}/>
             },
-            tabBarColor: Colors.tabBarColor
+            tabBarColor: Colors.tabBarColor,
         }
     },
     Favorites: {
         screen: FavNavigator,
         navigationOptions: {
-            tabBarLabel: 'Ulubione',
+            tabBarLabel: Platform.OS === 'android'
+                ? <Text style={{fontFamily: 'open-sans-bold'}}>Ulubione</Text>
+                : 'Ulubione',
             tabBarIcon: (tabInfo) => {
                 //tintColor jest tym kolorem który definiuję niżej, w tabBarOptions
                 return <Ionicons name='ios-star' color={tabInfo.tintColor} size={22}/>
@@ -81,7 +90,10 @@ const MealFavTabNavigator = Platform.OS === 'android'
     })
     : createBottomTabNavigator(tabScreenConfig, {
         tabBarOptions: {
-            activeTintColor: Colors.headerColor
+            activeTintColor: Colors.headerColor,
+            labelStyle: {
+                fontFamily: 'open-sans-bold'
+            }
         }
     })
 
@@ -95,7 +107,7 @@ const MainNavigator = createDrawerNavigator({
     MealsFav: {
         screen: MealFavTabNavigator,
         navigationOptions: {
-            drawerLabel: 'Ulubione'
+            drawerLabel: 'Przepisy'
         }},
     Filters: {
         screen:FiltersNavigator,
