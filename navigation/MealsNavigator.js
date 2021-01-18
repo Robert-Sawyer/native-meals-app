@@ -2,6 +2,7 @@ import {createAppContainer} from 'react-navigation'
 import {createStackNavigator} from 'react-navigation-stack'
 import {createBottomTabNavigator} from 'react-navigation-tabs'
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs'
+import {createDrawerNavigator} from 'react-navigation-drawer'
 import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import MealDetailsScreen from "../screens/MealDetailsScreen";
@@ -10,6 +11,7 @@ import Colors from "../constants/Colors";
 import FavoritesScreen from "../screens/FavoritesScreen";
 import {Ionicons} from "@expo/vector-icons";
 import React from "react";
+import FiltersScreen from "../screens/FiltersScreen";
 
 const defaultNavOptions = {
     headerStyle: {
@@ -22,19 +24,8 @@ const defaultNavOptions = {
 }
 
 const MealsNavigator = createStackNavigator({
-    CategoriesScreen: {
-        screen: CategoriesScreen,
-        navigationOptions: {
-            headerTitle: 'Kategorie',
-            headerTitleStyle: {
-                marginLeft: 10,
-                fontSize: 24,
-            }
-        }
-    },
-    CategoryMealsScreen: {
-        screen: CategoryMealsScreen
-    },
+    CategoriesScreen: CategoriesScreen,
+    CategoryMealsScreen: CategoryMealsScreen,
     MealDetailsScreen: MealDetailsScreen,
 }, {
     //żeby nie ustawiać stylów w komponencie można a nawet powinno się to zrobić tutaj, w Nawigatorze, do tego służy
@@ -47,16 +38,7 @@ const MealsNavigator = createStackNavigator({
 })
 
 const FavNavigator = createStackNavigator({
-    FavoritesScreen: {
-        screen: FavoritesScreen,
-        navigationOptions: {
-            headerTitle: 'Ulubione',
-            headerTitleStyle: {
-                marginLeft: 10,
-                fontSize: 24,
-            }
-        }
-    },
+    FavoritesScreen: FavoritesScreen,
     MealDetail: MealDetailsScreen
 },{
     defaultNavigationOptions: defaultNavOptions
@@ -103,4 +85,28 @@ const MealFavTabNavigator = Platform.OS === 'android'
         }
     })
 
-export default createAppContainer(MealFavTabNavigator)
+const FiltersNavigator = createStackNavigator({
+    Filters: FiltersScreen,
+}, {
+    defaultNavigationOptions: defaultNavOptions
+})
+
+const MainNavigator = createDrawerNavigator({
+    MealsFav: {
+        screen: MealFavTabNavigator,
+        navigationOptions: {
+            drawerLabel: 'Ulubione'
+        }},
+    Filters: {
+        screen:FiltersNavigator,
+        navigationOptions: {
+            title: 'Filtry'
+        }
+    },
+}, {
+    contentOptions: {
+        activeTintColor: Colors.headerColor
+    }
+})
+
+export default createAppContainer(MainNavigator)
