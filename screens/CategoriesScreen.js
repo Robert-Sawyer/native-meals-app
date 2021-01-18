@@ -1,6 +1,7 @@
 import React from 'react'
 import {FlatList} from 'react-native'
-
+import {HeaderButtons, Item} from 'react-navigation-header-buttons'
+import CustomHeaderButton from "../components/HeaderButton";
 import {CATEGORIES} from "../data/data";
 import CategoryGridTile from "../components/CategoryGridTile";
 
@@ -12,13 +13,13 @@ const CategoriesScreen = props => {
                 title={itemData.item.title}
                 color={itemData.item.color}
                 onSelect={() => {
-                props.navigation.navigate('CategoryMealsScreen',
-                    //dodaję parametry z tego ekranu na następny, żeby można było wyświetlić tylko przepisy z tej jednej
-                    // kategorii
-                    {
-                        categoryId: itemData.item.id,
-                    })
-            }}/>
+                    props.navigation.navigate('CategoryMealsScreen',
+                        //dodaję parametry z tego ekranu na następny, żeby można było wyświetlić tylko przepisy z tej jednej
+                        // kategorii
+                        {
+                            categoryId: itemData.item.id,
+                        })
+                }}/>
         )
     }
 
@@ -29,6 +30,22 @@ const CategoriesScreen = props => {
             renderItem={renderGridItem}
             numColumns={2}/>
     )
+}
+
+CategoriesScreen.navigationOptions = (navData) => {
+    return {
+        headerTitle: 'Kategorie',
+        headerTitleStyle: {
+            marginLeft: 10,
+            fontSize: 24,
+        },
+        headerLeft:
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item title='Menu' iconName='ios-menu' onPress={() => {
+                    navData.navigation.toggleDrawer()
+                }}/>
+            </HeaderButtons>
+    }
 }
 
 export default CategoriesScreen
