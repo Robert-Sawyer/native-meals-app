@@ -1,16 +1,20 @@
 import React from 'react'
-import {CATEGORIES, MEALS} from "../data/data";
+import {useSelector} from 'react-redux'
+import {CATEGORIES} from "../data/data";
 import MealList from "../components/MealList";
-
 
 const CategoryMealsScreen = props => {
 
     //odbieram tu nazwę parametru z CategoriesScreen
     const categoryId = props.navigation.getParam('categoryId')
 
-    //filtruję wyświetlane przepisy sprawdzając czy w tablicy categorii w MEALS jest w ogóle taka sama kategoria co
+    //useSelector jest po to by zarządzać wycinkiem stora reduxowego wewnątrz komponentu - w ten sposób mogę
+    //dostać się do meals z combinereducers z App.js, a następnie do initialState i filteredMeals
+    const availableMeals = useSelector(state => state.meals.filteredMeals)
+
+    //filtruję wyświetlane przepisy sprawdzając czy w tablicy categorii w filteredMeals taka sama kategoria co
     //wybrana przez usera
-    const displayedMeals = MEALS.filter(meal => meal.categoryId.indexOf(categoryId) >= 0)
+    const displayedMeals = availableMeals.filter(meal => meal.categoryId.indexOf(categoryId) >= 0)
 
     return (
         <MealList listData={displayedMeals} navigation={props.navigation}/>

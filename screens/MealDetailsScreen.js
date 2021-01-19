@@ -1,4 +1,5 @@
 import React from 'react'
+import {useSelector} from 'react-redux'
 import {View, Text, StyleSheet, ScrollView, Image} from 'react-native'
 import {HeaderButtons, Item} from 'react-navigation-header-buttons'
 import DefaultText from "../components/DefaultText";
@@ -15,8 +16,11 @@ const ListItem = props => {
 
 const MealDetailsScreen = props => {
 
+    //dobieram się tutaj do wszystkich przepisów i w nich znajduję przepis z odpowiednim id
+    const availableMeals = useSelector(state => state.meals.meals)
+
     const mealId = props.navigation.getParam('mealId')
-    const selectedMeal = MEALS.find(meal => meal.id === mealId)
+    const selectedMeal = availableMeals.find(meal => meal.id === mealId)
 
     return (
         <ScrollView>
