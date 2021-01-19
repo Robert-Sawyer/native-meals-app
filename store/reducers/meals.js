@@ -6,7 +6,7 @@ const initialState = {
     favoriteMeals: [],
 }
 
-const mealsReducer = (state, action) => {
+const mealsReducer = (state = initialState, action) => {
     return state
 }
 
