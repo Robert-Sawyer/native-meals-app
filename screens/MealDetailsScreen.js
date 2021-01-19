@@ -39,10 +39,11 @@ const MealDetailsScreen = props => {
 }
 
 MealDetailsScreen.navigationOptions = navigationData => {
-    const mealId = navigationData.navigation.getParam('mealId')
-    const selectedMeal = MEALS.find(meal => meal.id === mealId)
+    // const mealId = navigationData.navigation.getParam('mealId')
+    const mealTitle = navigationData.navigation.getParam('mealTitle')
+    // const selectedMeal = MEALS.find(meal => meal.id === mealId)
     return {
-        headerTitle: selectedMeal.title,
+        headerTitle: mealTitle,
         headerRight: () =>
             //HeaderButtons wymaga zdefiniowania komponentu, którym jest mój CHB, w Item za to definiuję nazwę ikony
             //z pakietu w dokumentacji expo-vectors

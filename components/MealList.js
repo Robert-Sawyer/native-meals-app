@@ -15,7 +15,11 @@ const MealList = props => {
                 onSelectMeal={() => {
                     props.navigation.navigate('MealDetailsScreen',
                         {
-                            mealId: itemData.item.id
+                            mealId: itemData.item.id,
+                            //przesyłam dodatkowy parametr do komponentu ze szczegółami bo nie moge skorzystać
+                            //z useselectora w navigationoptions a useEffect i przesyłanie parametru wewnątrz
+                            // komponentu będzie działało z opóźnieniem
+                            mealTitle: itemData.item.title
                         })
                 }}
             />
