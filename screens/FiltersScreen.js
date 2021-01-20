@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
+import {useDispatch} from 'react-redux'
 import {View, Text, StyleSheet, Switch, Platform} from 'react-native'
 import {HeaderButtons, Item} from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/HeaderButton";
 import Colors from "../constants/Colors";
+import {setFilters} from "../store/actions/meals";
 
 const FiltersSwitch = props => {
     return (
@@ -27,6 +29,8 @@ const FiltersScreen = props => {
     const [isVegan, setIsVegan] = useState(false)
     const [isVegetarian, setIsVegetarian] = useState(false)
 
+    const dispatch = useDispatch()
+
     //chcę zapisać moje filtry i do tego potrzebuję aktualneo stanu wewnątrz komponentu. Ale przycisk zapisu
     //znajdje się w headerze, czyli navigationOptions musi otrzymać te dane a więc muszę przenieść informacje
     //o stanie komponentu na zewnątrz, do opcji navigacji
@@ -41,9 +45,10 @@ const FiltersScreen = props => {
             vegan: isVegan,
             vegetarian: isVegetarian
         }
-        console.log(appliedFilters)
 
-    }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian])
+        dispatch(setFilters(appliedFilters))
+
+    }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian, dispatch])
 
     //chcę, żeby po każdej zmianie stanu filtrów komponent na nowo sie renderował i żeby zapis filtrów przyciskiem
     //działał za każdym razem - do tego będe uzywał parametrów
