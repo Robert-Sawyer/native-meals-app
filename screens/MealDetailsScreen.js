@@ -20,6 +20,10 @@ const MealDetailsScreen = props => {
     const availableMeals = useSelector(state => state.meals.meals)
 
     const mealId = props.navigation.getParam('mealId')
+    //sprawdzam czy w stanie, na liście ulubionych jest przepis, który został kliknięty
+    const currentMealIsFavorite = useSelector(state =>
+        state.meals.favoriteMeals.some(meal => meal.id === mealId))
+
     const selectedMeal = availableMeals.find(meal => meal.id === mealId)
 
     //poniżej tworzę mechanizm tworzenia i przekazywania do navigacji parametru z informacją czy został dodany
@@ -34,6 +38,10 @@ const MealDetailsScreen = props => {
     useEffect(() => {
         props.navigation.setParams({toggleFav: handleToggleFavorite})
     }, [handleToggleFavorite])
+
+    useEffect(() => {
+        props.navigation.setParams({isFav: currentMealIsFavorite})
+    }, [currentMealIsFavorite])
 
     return (
         <ScrollView>
@@ -55,6 +63,7 @@ MealDetailsScreen.navigationOptions = navigationData => {
     // const mealId = navigationData.navigation.getParam('mealId')
     const mealTitle = navigationData.navigation.getParam('mealTitle')
     const toggleFavorite = navigationData.navigation.getParam('toggleFav')
+    const isFavorite = navigationData.navigation.getParam('isFav')
     // const selectedMeal = MEALS.find(meal => meal.id === mealId)
     return {
         headerTitle: mealTitle,
@@ -62,7 +71,10 @@ MealDetailsScreen.navigationOptions = navigationData => {
             //HeaderButtons wymaga zdefiniowania komponentu, którym jest mój CHB, w Item za to definiuję nazwę ikony
             //z pakietu w dokumentacji expo-vectors
             <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-                <Item title='Favorite' iconName='ios-star-outline' onPress={toggleFavorite}/>
+                <Item
+                    title='Favorite'
+                    iconName={isFavorite ? 'ios-star' : 'ios-star-outline'}
+                    onPress={toggleFavorite}/>
             </HeaderButtons>
     }
 
